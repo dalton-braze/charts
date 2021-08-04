@@ -53,8 +53,21 @@ owner: astro
 # -- When set to true monitors will not be managed in datadog.
 dryRun: false
 custom_config:
-  # -- If true a custom configuration must be specified in `custom_config.data`.
+  # -- If true a custom configuration must be specified in one of:
+  #   custom_config.data
+  #   custom_config.configMapOverride
   enabled: false
+  # -- Custom ConfigMap override allowing a parent chart to define its own ConfigMap that astro mounts into its Pods.
+  #
+  # `configMapOverride` is mutually exclusive with `data`
+  #
+  # Structure:
+  #   configMapOverride:
+  #     name: other-config-map # Must not contain uppercase letters
+  #     rulesetFiles:
+  #       - ruleset-1.yaml
+  #       - ruleset-2.yaml
+  configMapOverride:
   # -- An astro configuration file. See the [Astro repo readme](https://github.com/fairwindsops/astro) for more details.
   # @default -- ""
   data: |

@@ -1,4 +1,4 @@
-{{- if .Values.custom_config.enabled }}
+{{- if and .Values.custom_config.enabled (not .Values.custom_config.configMapOverride) }}
 kind: ConfigMap
 apiVersion: v1
 metadata:

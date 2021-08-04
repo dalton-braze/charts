@@ -60,7 +60,11 @@ spec:
       volumes:
       - name: config-data
         configMap:
+          {{- if .Values.custom_config.configMapOverride }}
+          name: {{ index .Values.custom_config.configMapOverride "name" }}
+          {{- else }}
           name: {{ include "astro.fullname" . }}-data
+          {{- end }}
           {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:

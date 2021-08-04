@@ -11,7 +11,15 @@ data:
   OWNER: {{ .Values.owner }}
   DRY_RUN: {{ .Values.dryRun | quote }}
 {{- if .Values.custom_config.enabled }}
+  {{- if .Values.custom_config.configMapOverride }}
+    {{- $paths := list }}
+    {{- range .Values.custom_config.configMapOverride.rulesetFiles }}
+      {{- $paths = printf "/etc/config/%s" . | append $paths }}
+    {{- end }}
+  DEFINITIONS_PATH: {{ join ";" $paths }}
+  {{- else }}
   DEFINITIONS_PATH: /etc/config/config.yml
+  {{- end }}
 {{- else }}
   DEFINITIONS_PATH: {{ .Values.definitionsPath }}
 {{- end }}
